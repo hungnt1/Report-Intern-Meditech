@@ -1,0 +1,18 @@
+# Cấu trúc phân cấp của Linux
+
+Trên nhiều hệ điều hành, bao gồm cả linux, filesystem có cấu trúc giống như cây. Cây thường được miêu tả ngược, thường bắt đầu thừ thư mục root (/) tất cả các thứ mục khác sẽ là con của thư mục này.Hiện Linux đang hỗ trợ các định dang filesystem gồm : ext3, ext4, btrfs, xfs
+
+1. / ( Root ) : thư mục gốc , thư mục cha toàn bộ hệ thống
+2. /bin : chứa các tệp binary , chưa các lệnh của người dùng và toàn hệ hệ thống 
+3. /boot : chưa các thư mục và tập tin cho quá trình bootloader
+4. /dev : chứa các thết bị ngoài vi, thiết bị đầu cuối gắn vào hệ thống
+5. /etc : chưa các tệp cấu hình của các package, và system
+6. /home : chứa các tập tin, thư mục của người dùng trên hệ thống
+7. /lib : chứa các thư viện cho các chương trình trong /bin và /sbin
+8. / media : là các điểm gắt kết system với các thiết bị bên ngàoi , ex :/media/usb1
+9. /mnt : điểm gắt kết cho phép gắn trực tiếp filesystem
+10. /opt : chứa các gói phần mềm từ các package đã cài đặt 
+11.  /tmp : chứa các gói tập tin tạm thời của các package đang chạy, sẽ mất đi khi root
+12.  /usr : phần vùng chỉ đọc , chứa các tiện ích mở rộng người dùng và package
+13. /proc : chưá các thông tin về các quá trình trên hệ thống 
+14. /var : chứa 
