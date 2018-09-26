@@ -1,0 +1,78 @@
+ # Người dùng , nhóm và biến môi trường
+ 
+
+ 
+ Command | Operation
+ --------|----------
+ whoiam  | Hiển thị tên user đang đăng nhập
+ who -a  | Hiển thị các session trên hệ thống
+ id       | Hiển thị ID User và ID Group
+ useradd   | Tạo người dùng mới
+ userdel | Xóa người dùng
+ usermod | Chỉnh sửa người dùng ( user_id, group id, password ... )
+ password | Chỉnh sửa mật khẩu người dùng
+ groupadd | Tạo một nhóm mới
+ groupdel | Xóa nhóm đang tồn tại
+ usermod -G newgroup user_name | Chuyển người dùng vào một nhóm
+ 
+ 
+|Command| TASK |
+|----|-------|
+|echo $HOME | Hiển thị giá trị của var $HOME|
+|export $JAVA = '/usr/lib/jdk' | Gắn biến môi trường|
+|echo VAR=value >> ~/.bashrc| Thêm biến môi trường vĩnh viễn|
+|echo $HOSTNAME ||
+|echo $HOME||
+|echo $LANG||
+# .bash_profile
+Trong   .bash_profile sẽ chứa cá biến môi trường có sẵn và người dùng cấu hình thêm 
+
+#  /etc/passwd
+Trong tập tin /etc/password không chỉ chứa các các tài khoản thực của một người dùng cụ thể mà còn bao gồm các user được tạo bởi các application và services
+Trong tập tin này sẽ chứa các thông tin của user có thể đăng nhập vào hệ thống, hoặc làm owner cho các tiến trình :
+Ví dụ: 
+```
+hung_sys:x:1000:1000:hanoi:/home/hung_sys:/bin/bash
+```
+	( Thông tin từ trái qua phải )
+* hung_sys :   tên xác thực đăng nhập, hoặc làm owner cho các tiến trình
+* x :  thể hiện cho password của user, password này được mã hóa và lưu tại "/etc/shadow"
+* 1000 : User_ID
+* 1000 : Group_ID
+* hanoi :    thông tin cơ bản của người dùng
+* /home/hung_sys : đường dẫn thư mục home của người dùng
+* /bin/bash : chương trình tự động chạy mỗi khi user đăng nhập ( bash shell ) 
+
+#  /etc/shadow
+
+Trong tập tin shadown để tăng bảo mật thì mật khẩu trong này được lưu dưới dạng hàm băm . Tập tin này chỉ có root mới có quyền truy cập 
+
+Ví dụ : 
+```
+hung_sys:$6$YxKEM337$6kyIpFaMZVUYv5uLw6D3L7o40WfA4fviaMGbuU.cUU1wfek0mGIr9d0zB9q6yCBH7yneM9AxzbZUoQegOVhVZ.:17793:0:99999:7:::
+
+```
+	( Thông tin từ trái qua phải )
+
+*	hung_sys :   tên xác thực đăng nhập, hoặc làm owner cho các tiến trình
+*	$6$YxKEM337$6kyIpFaMZVUYv5uLw ..... : mật khẩu được mã hóa dưới dạng băm
+*	17793 : ngày đổi mật khẩu mới nhất
+*   0 : ngày  được phép đổi mật khẩu
+*	99999 : ngày yêu cầu đổi mật khẩu
+*	ngày mật khẩu hết hạn
+*	ngày tài khoản hết hạn
+*	số ngày kể từ khi tài khoản hết hạn
+Phân biệt hàm băm : 
+```
+1.  **$1$**  is MD5
+2.  **$2a$**  is Blowfish
+3.  **$2y$**  is Blowfish
+4.  **$5$**  is SHA-256
+5.  **$6$**  is SHA-512
+```
+# Khôi phục mật khẩu root từ shadow password
+
+B1 : Boot Server bằng USB Bootable Centos\
+B2 : Chọn  "Troubleshooting" -> "Rescue System"\
+
+ 
