@@ -1,0 +1,68 @@
+# Quyền sỡ hữu file trong Linux
+Mỗi tập tin và thư mục trên hệ thống Unix / Linux của bạn được gán 3 loại chủ sở hữu, được đưa ra dưới đây.
+
+* User : được hiểu là chủ của tập tin. Mặc định là người tạo ra tập tin
+* Group : là nhóm chứa ownter của tập tin. 
+* Other : Người này đã không tạo tệp, cũng không thuộc về nhóm người dùng có thể sở hữu tệp.  Thực chất đây là erveryone  
+
+# Quyền thao tác với file trong Linux
+
+* Read : cho phép người dùng xem được nội dung trong file
+* Write  : cho phép người dùng xem, chỉnh sửa nội dung trong file
+* Execute : cho phép chạy file, có thể là program. Đối với everyone nên cấp quyền Execute nhưng không kèm theo read, write
+
+# Phân quyền trong  Linux
+
+Linux cung cấp môi trường multiuser . Việc phân quyền là một hình thức để bảo vệ, kiếm soát quyền truy cập vào tập tin và thư mục
+
+1. Command
+  * chown : chỉnh sử owner ( user )  của tập tin hoặc thư mục
+  * chgrp : chỉnh sửa owner ( group ) của tập tin hoăc thư mục
+  * chmod : chỉnh sử quyền của tập tin hoặc thư mục
+
+2. Phân quyền
+  * Có 3 loại quyền gồm : read ( r ), write ( w ), execute ( x )\
+  Để xác định, người ta gắn một con số cho từng quyền : read = 4 , write = 2  , execute = 1\ hoặc ký kiệu
+  
+  |Quyền    |Số        |Ký Hiệu|
+  |---------|----------|-------|
+  |Không có đặt quyền| 0 | --- |
+  |Execute | 1| --x|
+  |2| 	Write |	-w- |
+  |3 |	Execute + Write |	-wx |
+  |4 |	Read |	r-- |
+  |5 |	Read + Execute |	r-x |
+  |6 | 	Read +Write |	rw- |
+  |7 |	Read + Write +Execute |	rwx
+
+   
+  * Có 3 nhóm bị ảnh hưởng bởi phân quyền : user owner ( u ), group owner ( g ), others ( o ) 
+  
+3. Phân tách quyền
+
+Ví dụ :
+
+
+```
+chmod 775 vmware 
+ls -l
+.....
+drwxrwxr-x 15 nguyenhungsync nguyenhungsync     4096 Thg 9 26 00:08  vmware
+.....
+```
+* d : represent  directory ( đại điện cho chính folder ) 
+* r = read permission
+* w = write permission
+* x = execute permission
+* - = no permission
+
+Quyền sẽ được hiển thị từ trái sang phải theo thứ tự : user - group - other và read ( not read ), write ( no write ), execute ( not excute)
+- Ở phần thứ nhất : user - đang có full quyền rwx
+- Ở phần thứ 2 : group - đang có full quyền rwx
+- Ỏ phần thứ 3 : others - đang có quyền read, không có quyền write và có quyền execute
+
+4. Thực thi chỉnh sửa quyền bằng "op" option
+  * Thêm “op”,(+), bớt (-), gán (=) các quyền “permissions” (r w x) cho từng nhóm đối tượng “who” (u g o) - (owner user, group, other user)
+  * Mode = (who) + (op) + (permissions)	
+  * Ví dụ  : chmod g-w notice.txt ( thực hiện bỏ quyền write cho group 
+  
