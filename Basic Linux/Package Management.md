@@ -1,0 +1,110 @@
+# Package Management Centos 7
+
+# Quản lý package bằng YM
+Command | Operation 
+------------ | -------------
+yum update | Cập nhật các package trên hệ thống
+yum info package_name | Trả về trạng thái package  ( Installed , Available, No Matching )
+yum deplíst package_name | Trả về các gói dependent của package 
+yum install package_name | Cài đặt package từ kho lưu trũ ( respo ) 
+yum remove package_name | Gỡ bỏ một package đã cài
+yum update package_name | Cập nhật package, reinstall càc dependent bị lỗi| 
+yum list | Liệt kê các package đã cài
+yum clean package_name | Xóa các thông tin của package đã được lưu trong yum cache dbLiệ
+yum group list | Liệt kê các Group Packages 
+yum group install "group_name" | Cài đặt một Group Package
+yum group remove "group_name " | Gỡ bỏ một Group Package
+
+# Cài đặt package bằng manual
+
+Các gói này sẽ là source ( mã nguồn ), được tải từ mạng về. Thường sẽ dưới hạng gz zip
+```
+tar -zxvf net.gz
+
+``
+Sau kh gỉai nén xong
+cd net
+./configure
+make
+make install
+```
+Trong đó, thực chất ./configure là một shell script để kiểm tra hệ thống của bạn xem có đáp ứng đủ các yêu cầu để cài đặt gói hay không. Nếu thiếu các gói phụ thuộc thì cần phải tìm và cài đặt nó rồi mới tiếp tục cài đặt được. Nếu đã sẵn sàng thì Makefile sẽ được tạo ra. Makefile là một file đặc biệt của tiện ích make nhằm hướng dẫn biên dịch mã nguồn của gói ra dạng thực thi
+Sau khi thực hiện xong make thì các gói đã có thể sử dụng, nhưng muốn package hoạt động như một global command thì cần phải make install để các gói về đúng system locate
+
+# Cài đặt cái package bằng RPM 
+
+Command | Operation 
+------------ | -------------
+rpm -ivh  package_file | Cài đặt một package
+rpm -ev package_n| Gỡ bỏ một package
+rpm -qa |  Hiển thị danh sách các gói đã được cài đặt trên hệ thống.
+
+# YUM Repos trong Centos
+ 
+1. Tệp cấu hình Repo trên Centos
+  *  được lưu tại folder /etc/yum.repos.d
+  * có thể mở rộng,và tùy chỉnh rác repo
+2. Các tùy chọn khi khởi tạo một repo
+  *  Repository ID : ID định nghĩa Repo ( * ) 
+  *  Name : tên của repo ( * ) 
+  *  Baseurl : URL lưu dữ liệu Repo ( ftp://, https://, http:// ) ( * ) 
+  *  Enable : Bật/ tắt repo ( * ) khi install và update
+  *  Gpgcheck  : Bật chức răng kiểm tra GPG key
+  *  Gpgkey : URL chứa GPG key 
+  *  Exclude : liệt kê các  package lọai trừ
+  *  Inclument  : Liệt kê các gói packages dependment
+3. Yum quản lý ( cài đặt, xóa, update ) các gói RPM từ các kho của của Centos hoặc bên thứ 3\
+    ( * ) : các tùy chọn tối thiểu
+# Khởi tạo một Local Repo Server
+
+1 . Cầi đặt Web Server
+```
+yum -y install httpd
+systemctl start httpd
+firewall-cmd --zone=public --permanent --add-service=http
+firewall-cmd --zone=public --permanent --add-service=https
+firewall-cmd --reload  
+
+```
+
+2. Đưa package trên Local Repo Server
+```
+mkdir /var/www/html/local_repo
+wget http://mirror.centos.org/centos/7.5.1804/os/x86_64/Packages/net-tools-2.0-0.22.20131004git.el7.x86_64.rpm
+
+```
+# Khởi tạo một file cấu hình Repo 
+
+1. Tạo file cấu hình
+ ```
+yum install createrepo -y 
+touch  /etc/yum.repos.d/Repo_Example.repo
+createrepo /var/www/html/local_repo
+
+ ```
+ 2. Cấu hình Repo
+```
+[Example_local]
+name=Local Example Repo
+baseurl=http://192.168.36.139/local_repo
+enabled=1
+gpgcheck=0
+
+ ```
+ 3. Kiểm tra 
+ ```
+ yum clean all
+ rm -rf /var/cache/yum
+ yum repolist
+ ```
+Cài đặt net-tools từ Example_Local_R
+![Kiểm thử ](https://image.ibb.co/kKnvZ9/Screenshot_from_2018_09_26_10_42_33.png)
+
+# Khác biệt giữa RPM và YUM
+
+| Tính năng  | YUM  | RPM  |     
+|---|---|---|
+| Tự động cài các depedment khi cài package  | Có  |  Không  |      
+| Cho phép cài nhiều phiên bản của 1 package  | Không   | Có    |      
+| Tự động cập nhật Package  | Có    | Không |      
+| Kết nối đến các Repository | Có | Không |
