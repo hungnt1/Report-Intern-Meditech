@@ -1,3 +1,7 @@
 
-Môi trường : Centos 7.5
-Thực Tập V : Nguyễn Hùng ( HUNGNT ) 
+
+## Basic Linux 
+
+Môi trường  : Centos 7.5
+
+Thực Tập Viên : Nguyễn Hùng ( HUNGNT ) 
