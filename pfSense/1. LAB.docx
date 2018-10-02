@@ -1,0 +1,252 @@
+
+
+
+Trường Đại Học FPT
+Học Viện Mạng và Phần Cứng - FPT Jetking
+
+
+
+
+Đề tài : Tìm hiểu tấn công trọng mạng LAN, triển khai tường lửa pfSense
+
+
+
+MỤC LỤC
+
+
+
+
+Đặt vấn đề
+Nhận xét
+
+Chương 1 : Cơ sở lý thuyết mạng nội bộ
+1.1 : Tổng quá về mạng nội bộ
+1.2 : Các thiết bị cấu thành mạng nội bộ và mô hình thực thi
+
+   Chương 2 : Tấn công mạng tầng 2 trong OSI Model
+2.1 : Tấn công kiểu ARP Spoofing
+2.1 : Tấn công kiểu Mac Table Overflow attack (Dos Attack)
+2.1 : Tấn công kiểu giả mạo DHCP
+2.1 : Tấn công kiểu VLAN hopping
+
+Chương 3 : Firewall pfSense và các dịch vụ
+3.1 : Tổng quát, phân loại tường firewall
+3.2 : Nguyên lý của tường lửa
+3.2 : Tổng quát về pfSense
+3.2 : Các mô hình triển khai pfSense
+Chương 4 : Triển khải pfSense trong môi trường doanh nghiệp
+4.1 : Mô hình triển khai trên 2 chi nhán
+4.2 : Cài đặt pfSense	 	 	
+
+
+
+
+
+
+
+
+Đặt vấn đề
+
+
+Hiện nay thế giới internet rất phát triển, khiến cho nhu cầu trảo đổi thông tin ra rộng khắp  thế giới là không thể thiếu đối với các cá nhân, cơ quan tổ chức. Song song với việc xâu dựng hạ tầng mạng nội bộ để tham gia vào mạng internet thì an tòan và bảo mật thông tin là một trong những vấn đề quan trọng hàng đầu khi các mạng nội bộ của các cơ quan , tổ chức với Internet
+    Từ nhu cầu phát triển của công ty , cơ quan tổ chức phải hòa mình vào mạng toàn cầu song vẫn phải đảm bảo bảo mật thông tin cho mạng nội bộ. Do đòi hỏi của môi trường người quản trị ngày càng phải dùng nhiều biện pháp để bảo vệ mạng nội bộ khi thực hiện kết nối ra môi trường internet. Tuy có rất nhiều giải pháp đảm bảo an ninh nhưng có 3 phương pháp chính gồm : giải pháp phần cứng, giải pháp phần mềm, giải pháp con người . 
+   Trong đó tường lửa được sử dụng rất nhiều, và hiệu quả để đảm bảo an ninh . Tường lửa được dùng để kiểm soát , theo dõi các hoạt động mạng trong mạng nội bộ, các mô hình mạng . 
+Dựa vào quy chế lọc dựa trên thông tin gói tin , tường lửa hoạt động bộ lọc. Tuy nhiên từng lửa chỉ có tác dụng trên các gói tin đi qua nó, không ngăn chặn các mã độc lây lan qua các đường vô tình hay cố ý mà người dùng thực thi sau tường lửa. Để giải quyết vấn đề này người quản trị cần phải cấu hình các phương pháp phòng thủ trên các thiết bị mạng hoạt động ở tầng 2, nhằm phòng chống các tuộc tấn công từ chính mạng nội bộ.
+  Tường lửa pfSense là một giải pháp tường lửa mềm dựa trên nền tảng hệ điều hành FreeBSD , và được sử dụng như  một tường lửa hoặc một bộ định tuyến mạng.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Chương 1 : Cơ sở lý thuyết mạng nội bộ
+
+1.1 : Tổng quan về mạng nội bộ
+LAN (Local Area Network) hay còn gọi mạng máy tính cục bộ là một hệ thống mạng dùng để kết nối các máy tính trong một phạm vi nhỏ (nhà ở, phòng làm việc, trường học,...). Mạng LAN còn có thể là các máy tính của cùng một công ty , tổ chức ở các chi nhánh khác nhau . Các máy tính trong mạng LAN có thể chia sẻ tài nguyên với nhau, mà điển hình là chia sẻ tập tin, máy in, máy quét và một số thiết bị khác.
+Tập hợp các mạng LAN sẽ thành mạng WAN mạng toàn cầu . Giúp chia sẻ dữ liệu từ các mạng nội bộ này sang mạng khác bất kể vị trí địa lý .	
+   1.2 : Các thiết bị cấu thành mạng nội bộ và mô hình thực thi
+Một mạng LAN tối thiểu cần có máy chủ (server), các thiết bị ghép nối (Repeater, Hub, Switch, Bridge), máy tính con (client), card mạng (Network Interface Card – NIC) và dây cáp (cable) để kết nối các máy tính lại với nhau. Trong thời đại của hệ điều hành MS-DOS, máy chủ mạng LAN thường sử dụng phần mềm Novell NetWare, tuy nhiên điều này đã trở nên lỗi thời hơn sau khi Windows NT và Windows for Workgroups xuất hiện. Ngày nay hầu hết máy chủ sử dụng hệ điều hành Windows, và tốc độ mạng LAN có thể lên đến 10 Mbps, 100 Mbps hay thậm chí là 1 Gbps.
+Các mô hình mạng máy tính :
+Mô hình mạng BUS
+Mô hình mạng Start
+Mô hình mạng Mesh
+Mô hình mạng Ring
+Mô hình mạng Hybird
+ 
+Chương 2 : Tấn công mạng tầng 2 trong OSI Model
+Trong hệ thống mạng của 1 doanh nghiệp hay 1 tổ chức thì Layer 2 (theo mô hình OSI) là layer yếu nhất và dễ bị tấn công nhất. Với tầng này thì có rất nhiều kiểu và kĩ thuật tấn công. Dưới đây là một số phương thức tấn công điển hình ở Layer 2 .
+
+2.1 : Tấn công kiểu ARP Spoofing
+Máy tính A đang muốn tạo kết nối đến với máy B qua môi trường multiaccess ( switch  ) . Để thiết lập kết nối máy A cần biết được địa chỉ IP và địa chỉ MAC của máy B . Trước tiên máy A sẽ tìm địa chỉ MAC của máy B qua bằng địa chỉ IP thông qua ARP table. Nếu  địa chỉ MAC máy B không đúng . Máy A sẽ gửi một bản tin broadcast ARP Request , để yêu cầu tìm địa chỉ MAC cho địa chỉ IP máy B . Do tính chất của ARP Request là một bản tin broadcast, người tấn công sẽ giả mạo địa chỉ MAC của máy B khi nhận được ARP Request. Sau đó người tấn công lại trả về máy A một bản tin ARP Rely là địa chỉ MAC của máy tấn công. Đồng thời gửi một ARP Request đến máy B. Từ đó tất cả tập tin giữa máy A và B sẽ đi qua máy tấn công.
+2.1 : Tấn công kiểu Mac Table Overflow attack (Dos Attack)
+Kiểu tấn công này dựa trên sự giới hạn của bảng CAM trong Switch. Mỗi loại Switch thì có khả năng lưu trữ bảng CAM khác nhau nhưng đều có một giới hạn nhất định. Kẻ tấn công sẽ gửi hàng loạt các bản tin ARP Request đến Switch , các Switch này sẽ gửi ARP Request đến các Switch khác qua các cổng. ARP Request gửi đến liên tục khiến bảng CAM đầy  . Switch sẽ bị tê liệt hoàn toàn do không xác định được cổng nguồn để gửi tập tin
+2.1 : Tấn công kiểu giả mạo DHCP
+Trên hạ tầng mạng của doanh nghiệp, giao thức thường cấp phát địa chỉ IP là DHCP - Dynamic Host Configuration. Sử dụng DHCP sẽ nhanh hơn và chính xác hơn so với việc cấu hình địa chỉ IP thông tin cấu hình tĩnh bằng tay.
+Điểm mấu chốt ở đây là xuyên suốt quá trình trao đổi thông điệp giữa server và client không hề có quá trình xác thực hay kiểm soát truy cập nào: Vì vậy, server không có cách nào biết được rằng nó có đang liên lạc với bất kì client nào hay kể cả với attacker hay không, và ngược lại client cũng không thể biết được là nó có đang liên lạc với một DHCP server thật hay là một DHCP server giả mạo hay không     	Khi attacker tấn công vào trong hệ thống mạng nội bộ qua DHCP, hắn sẽ dựng lên một máy chủ DHCP trên máy tính cá nhân của mình (ví dụ cài phần mềm DHCP Server TFTPD32). Khi đó, máy của attacker có thể trả lời gói tin DHCP request trước khi máy chủ DHCP thật đáp lại (vì có thê DHCP Server giả mạo xử lý nhanh hơn). Bản tin DHCP Offer từ máy attaker có thể chứa thông tin Gateway và DNS giả mạo (ví dụ đặt địa chỉ máy chủ DNS và địa chỉ Gateway sẽ là địa chỉ IP trên máy tính của Attacker). Hậu quả là, tất cả các thông tin liên lạc từ máy Client sẽ đi qua máy tính của kẻ tính tấn công. 
+2.1 : Tấn công kiểu VLAN hopping
+Giả sử kẻ tấn công muốn truy cập bất hợp pháp vào Server nằm ở VLAN 20, tuy nhiên máy của hacker lại nằm ở VLAN 99 (native VLAN). Vậy làm thế nào để truy cập vào server?
+Kẻ tấn công sẽ gắn thêm một tag VLAN 20 vào trong frame Ethernet gửi đến switch 1. Swich1 nhận thấy frame này thuộc VLAN 99 nên nó loại bỏ tag VLAN 99 và gửi frame lên đường trunk mà KHÔNG gắn tag cho frame này bởi vì frame này thuộc native VLAN. Như vậy nghiễm nhiên frame này bây giờ thuộc VLAN 20. Khi switch 2 nhận được frame VLAN 20, nó sẽ forward đến server nằm ở VLAN 20. Như vậy kẻ tấn công đã truy cập được vào server nằm ở VLAN 20 mặc dù máy của hắn ở VLAN 99.
+
+
+Chương 3 : Firewall pfSense và các dịch vụ
+3.1 : Tổng quát, phân loại tường firewall
+Tường lửa là công cụ cần thiết trong việc quản lý và kiểm soát lưu lượng mạng, là một thiết bị mạng được sử dụng để lọc lưu lượng truy cập, thường được triển khai giữa
+một mạng riêng và một mạng kết nối đến Internet, các mạng nội bộ với nhau . Ngoài ra tường lửa cũng có thể được triển khai để phân chia giữa các phòng ban trong một công ty. Nếu không có tường lửa, hệ thống mạng sẽ không thể hạn chế lưu lượng truy cập độc hại từ Internet thâm nhập vào mạng nội bộ. Lưu lượng mạng thông qua tường lửa được lọc dựa trên
+các chính sách đã được thiết lập, còn được gọi là các bộ lọc hoặc danh sách kiểm soát
+truy cập (ACL). Chúng cơ bản là một bộ các chỉ lệnh có nhiệm vụ lọc ra các luồng dữ
+liệu nguy hại hoặc không được cho phép truy cập, chỉ có các kết nối cho phép mới
+vượt qua hàng rào an ninh được cung cấp bởi các tường lửa.
+	Hiện nay có thể chia từng lửa thành 2 loại : 
+ Tường lửa cứng :  tường lửa này được tích hợp sẵn trên phần cứng. Khi triển khai người ta cần phải mua thiết về . Tường lửa cứng họat động ở tầng Network và   Transport . Tường lửa cứng không thể đọc được nội dung gói tin
+Tường lửa mềm : hoạt động như một phần mềm, có thể cài trên server, hoặc các thiết bị chuyên biệt với cấu hình nhỏ chuyên biệt để sử dụng cho từng lửa mềm . Khác với tường lửa cừng, tường lửa mềm có thể đọc được nội dung gói tin 
+ 
+3.2 : Nguyên lý của tường lửa
+ 	Bộ lọc packet cho phép hay từ chối mỗi packet mà nó nhận đu­ợc. Nó kiểm tra toàn bộ đoạn dữ liệu để quyết định xem đoạn dữ liệu đó có thoả mãn một trong số các luật lệ của lọc packet hay không. Các luật lệ lọc packet này là dựa trên các thông tin ở đầu mỗi packet (packet header), dùng để cho phép truyền các packet đó ở trên mạng. 
+	Bao gồm:
+Địa chỉ IP nơi xuất phát ( IP Source address) 
+Địa chỉ IP nơi nhận (IP Destination address) 
+Những thủ tục truyền tin (TCP, UDP, ICMP, IP tunnel) 
+Cổng TCP/UDP nơi xuất phát (TCP/UDP source port) 
+Cổng TCP/UDP nơi nhận (TCP/UDP destination port) 
+Dạng thông báo ICMP ( ICMP message type) 
+Giao diện packet đến ( incomming interface of packet) 
+Giao diện packet đi ( outcomming interface of packet) 
+3.3 . Tổng quát về pfSense
+PfSene được biết đến là một tường lửa mềm,  một dự án nguồn mở dựa trên nền tảng hệ điều hành FreeBSD và được sử dụng như một tường lửa hoặc một thiết bị định tuyến. Chris Buechler và Scott Ullricha hai tác giả sáng lập dự án m0n0wall năm 2004. Tuy nhiên tại thời điểm 2004, tác giả phải gặp vấn đề khó khăn khi mã nguồn của họ không tương thích tốt với các giải pháp tích hợp phần cứng (các thiết bị sử dụng 64MB RAM). PfSense với sự phát triển theo thời gian đã hỗ trợ rộng rãi các nền tảng phần cứng khác nhau và được sự đóng góp to lớn từ cộng động sử dụng mã nguồn mở thế giới.. PfSense yêu cầu cấu hình phần cứng thấp nên phù   cho việc tích hợp vào các thiết bị tích hợp khác nhau nhằm tăng tính linh động và hiệu suất trong quá trình vận hành.. Ngoài ra pfSense được tích hợp thêm WEB UI dễ dàng trong việc quản lý .
+Các chức năng chính của pfSense
+Tường lửa : xử lý mạnh trong  TCP/IP, phân tách các packet  nên pfSense dùng như 1 tường lửa nhắm cảm lọc những kết nối mạnh mẽ , phát hiện và lọc cảc gói tin không hợp pháp theo cac ACL đã định sẵn,
+Thiết bị định tuyến : 	thiết bị được cài đặt pfSense hoạt động như một Router có khả năng định tuyến các gói tin . Trong môi trường LAN , pfSense hỗ trợ 8021.Q cho phép hỗ trợ chia vùng mạng nội bộ.
+Máy chủ DNS, DHCP, VPN, Sniffer : pfSense như một máy chủ Sniffer nhắm nhiệm vụ thu nhập và phân tích.
+Wireless Captive Portal  :  dùng để xác thực người dùng , kiểm soát băng thông người dùng, quảng bá công ty .
+
+
+
+3.4 . Một số mô hình  doanh nghiệp triển khai pfSense
+
+
+Chương 4 : Triển khải pfSense trong môi trường doanh nghiệp
+
+Hiện nay trong môi trường doanh nghiệp , từ vừa nhỏ đến các doanh nghiệp lớn tường lửa không thể thiếu trong hạ tầng mạng . Một thiết bị có thể kiểm soát lưu lượng ra vào, mạng có dây, mạng không dây . Tường lửa
+
+4.1. Mô hình triển khai
+
+
+
+4.1 : Triển khai VLAN, quy hoạch IP cho mạng nội bộ
+4.1.1 : Chi nhánh HA NỘI :
+VLAN 10 - Staff 
+VLAN 20 - Student
+VLAN 40 - Server
+VLAN 99 - Manager
+
+VLAN 10 : 192.168.10.0/24
+	VLAN 20 : 192.168.20.0/24
+	VLAN 40 : 192.168.40.0/24
+	VLAN 99 : 192.168.99.0/24
+
+
+4.1.2 : Chi nhánh HCM 
+VLAN 10 - Staff
+	VLAN 20 - Student
+
+VLAN 10 : 192.168.110.0/24
+	VLAN 10 : 192.168.120.0/24
+
+ 4.2 . Cài đặt pfSense trên 2 vùng
+Thực hiện tải ISO cài đặt pfSense tại https://www.pfsense.org/download/. Tùy vào phần cứng để lựa chọn ISO iamge cho phù hợp
+Menu cài đặt  pfSense từ0 USB có chứa file ISO đã tải về 
+
+Cấu hình phần cứng pfSense ở cả 2 chi nhánh gốm : 1 GB RAM , 10 GB HDD, 3 NIC
+Quá trình cài đặt pfSense mất khoản từ 3-5 phút . Sau khi cài đặt xong sẽ thông báo các card mạng và giao diện cài đặt cơ bản. 
+
+4.3 : Cấu hình pfSense cơ bản
+	Sau khi cài đặt thành công, pfSense sẽ cung cấp cho người dùng một giao diện Web để dễ dàng quản lý tường lửa và các dịch cụ khác 
+
+
+   4.3.2 : Cấu hình VLAN pfSense  trên chi nhánh Hà Nội
+	Trước tiên ta phải cấu hình đường trunking từ pfSense xuống Switch, và từ switch Distributors xuống các switch core. Việc chia VLAN trên pfSense giúp quản lý các vùng nội bộ dễ dàng hơn. Cấp ACL riêng biệt cho từng khu vực trong mạng .
+
+ 
+
+Cấu hình từng VLAN vào một cổng vật lý cho mạng LAN .
+
+Sau khi cấu hình VLAN và cấu hình IP cho từng VLAN ta có danh sách các interface :
+
+4.3.3 : Cấu hình VLAN pfSense cho chi nhánh HCM
+Cũng như ở Hà Nội, trước tiên ta phải cấu hình đường trunking từ pfSense xuống Switch, và từ switch Distributors xuống các switch core. Việc chia VLAN trên pfSense giúp quản lý các vùng nội bộ dễ dàng hơn. Cấp ACL riêng biệt cho từng khu vực trong mạng .
+
+
+Sau khi cấu hình VLAN và IP cho từng interface ta có thông tin như sau : 
+
+4.4 : Cấu hình vùng DMZ tên chi nhánh Hà Nội
+– DMZ là một vùng mạng trung lập giữa mạng nội bộ và mạng internet.
+– DMZ là nơi chứa các thông tin cho phép người dùng từ internet truy xuất vào và chấp nhận các rủi ro tấn công từ internet.
+- DMZ là vùng tạch biệt với mạng LAN, chấp nhận rủi ro, kiểm soát các dịch vụ public của công ty .
+
+
+4.4.1 : Cấu hình Web server
+Sử dụng dịch vụ ISS trên Windowns Server 2012 để làm Webserver, cũng là Website Public cho cả công ty .
+
+
+4.4.2 : Cấu hình Port Forwarding trên pfSense
+	Để Website có thể truy cập từ ngoài internet vào , chúng ta cần Port Forwarding trene PfSense
+
+4.5 : Cấu hình DHCP Server
+4.5.1 : Cấu hình DHCP Server trên Windowns Server 2012 cho chi nhánh Hà Nội
+	Sử dụng Windowns Server 2012 để cấu hình DHCP Server cho các VLAN
+	* Lưu ý : Các gateway cho VLAN trỏ về VLAN Interface trên pfSense
+
+
+
+4.5.2 : Cấu hình DHCP Server trên pfSense cho chi nhánh HCM
+
+
+
+4.6 : Cấu hình OPENVPN
+	Nhằm mục đích kết nối 2 chi nhánh lại thành một mạng nội bộ. VPN Tunnel là một phương pháp nổi bật để giải quyết vấn đề. Tunnel ( đường hầm ) tạo ra 2 đường truyền riêng cho các mạng tham gia vào tiến trình được bảo mật , và riêng tư khi truyền qua internet  . VPN sử dụng nhiều chuẩn mã hóa cho dữ liệu truyền trong đường hầm . OPENVPN là một giao thức nổi bật trong VPN, dễ dàng cài đặt và sử dụng, đồng thời dữ liệu được mã hóa .
+4.6.1 : Cấu hình Openvpn Tunnel server trên chi nhánh HCM
+
+4.6.2 : Cấu hình Openvpn Tunnel client trên chi nhánh Hà Nội
+
+4.6.3 : Kiểm tra OpenVPN Status
+
+
+Tunnel đã được thiết lập cho 2 chi nhánh
+4.9 : Cấu hình các chống tấn công layer 2
+CAM attack
+Để ngăn chặn tấn công tràn bảng CAM chúng ta bật chức năng "port-security" trên các cổng accces
+
+DHCP Snooping
+Trước tiên bật chức năng dhcp snooping trên switch
+
+Sau khi bật , switch sẽ hiểu là tất cả các công sẽ là untrust và không đẩy DHCP Request ra các cổng
+Vào cổng kết nối với Windowns server và bật trust lên cho cổng
+
+
+
+VLAN Hooping
+Bật mode access vào các cổng không tham gia triến trình trunking
+
+
+
+
+ 
+
+
+
+
+
+
+	
+
+
+
+------- THE END ------------
