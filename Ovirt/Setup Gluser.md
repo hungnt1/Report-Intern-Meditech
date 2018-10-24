@@ -1,8 +1,8 @@
 
 
-# 1. Tìm hiểu cơ bản về GlusterFS
+# 4. Tìm hiểu cơ bản về GlusterFS
 
-## 1.1 : GlusterFS là gì?
+## 4.1 : GlusterFS là gì?
 Khi các hệ thống lưu trữ ngày càng trở nên rộng lớn, thách thực được đặt ra là làm sao để nó vận hành được tối ưu và dễ dàng mở rộng thêm hơn nữa. Hãy tưởng tượng giờ ta có khoảng 10TB dung lượng lưu trữ trên một server storage, ở đó các các client kết nối vào, tất cả các hoạt động đọc ghi được thực hiện trên server lưu trữ này. Giả sử đến một thời điểm nào đó, tất cả các hoạt động đọc ghi trên server storage này đều đã quá tải, ta lại có một server tương tự đã chuẩn bị sẵn. Vậy cách nào để ghép thêm server storage mới này vào hoạt động cùng server storage cũ và chia sẻ tải I/O của nó. Đó là lúc ta cần đến GlusterFS.
 
 Glusterfs thực hiện chính xác việc kết hợp nhiều server storage lại thành một khối storage lớn. Ưu điểm của glusterfs đó là:
@@ -16,20 +16,20 @@ Glusterfs thực hiện chính xác việc kết hợp nhiều server storage l�
  - Glusterfs xử lý dễ dàng vài Petabyte, cung cấp truy nhập cho hàng ngàn server một lúc.
 
 
-## 1.2: Các dạng Volume khác nhau trong hệ thống Gluserfs
+## 4.2: Các dạng Volume khác nhau trong hệ thống Gluserfs
 
-### 1.2.1:  Distributed Volume
+### 4.2.1:  Distributed Volume
 Với kỹ thuật này, các files (data) sẽ được phân tán, lưu trữ rời rạc (distributed) trong các bricks khác nhau . Ví dụ, bạn có 100 files: file1, file2, file3…, file100. Thì file1, file2 lưu ở brick1, file3,4lưu ở brick2, etc. Việc phân bố các files trên brick dựa vào thuật toán hash.
 ![](https://1hosting.com.vn/wp-content/uploads/2017/03/Glusterfs-Distributed-Volume.png)
 - Ưu điểm: Mở rộng được dung lượng lưu trữ nhanh chóng và dễ dàng, tổng dung lượng lưu trữ của volume bằng tổng dung lượng của các brick.
 
 - Nhược điểm: Khi một trong các brick bị ngắt kết nối, hoặc bị lỗi thì dữ liệu sẽ bị mất hoặc không truy vấn được.
-### 1.2.2. Replicated Volume
+### 4.2.2. Replicated Volume
 
 Với kỹ thuật này, dữ liệu sẽ được copy sang các bricks trong cùng một volume, được hiểu tương tự như RAID 1
 ![](https://1hosting.com.vn/wp-content/uploads/2017/03/Glusterfs-Replicated-Volume.png)
 
-### 1.2.3: Striped Volume
+### 4.2.3: Striped Volume
 Với kỹ thuật này, dữ liệu được chia nhỏ thành những phần khác nhau và lưu trữ ở những brick khác nhau trong volume. Kỹ thuật này tương tự RAID 0.
 
 ![](https://1hosting.com.vn/wp-content/uploads/2017/03/Glusterfs-Striped-Volume.png)
@@ -37,7 +37,7 @@ Với kỹ thuật này, dữ liệu được chia nhỏ thành những phần k
 
 Nhược điểm: Khi một trong những brick trong volume bị lỗi, thì volume đó không thể hoạt động được
 
-### 1.2.4: Distributed Replicated Volume
+### 4.2.4: Distributed Replicated Volume
 
 Kỹ thuật này là sự kết hợp giữa kỹ thuật 1 (Distributed Volume) và kỹ thuật 2 (Replicated Volume). Các file sẽ được phân tán tên các Brick ,đồng thời sẽ tạo 1 bản backup ở brick còn lại
 
@@ -46,18 +46,18 @@ Kỹ thuật này là sự kết hợp giữa kỹ thuật 1 (Distributed Volume
 - Ưu điểm là dữ liệu có tính sẵn sàng cao 
 - Nhược điểm là khi 1 volume có lỗi thì dữ liệu sẽ bị ảnh hưởng.
 
-### 1.2.5: Distributed Striped Volume
+### 4.2.5: Distributed Striped Volume
 Kết hợp kỹ thuật 1 (Distributed Volume) và kỹ thuật 3 (Striped Volume). Các file được phân tán trên các Brick nằm ở các Volume khác nhau.
 
 ![](https://1hosting.com.vn/wp-content/uploads/2017/03/Glusterfs-Distributed-Striped-Volume.png)
 
 
-# 2. Cài đặt GlusterFS trên Centos 7
+# 4.3. Cài đặt GlusterFS trên Centos 7
 Chuẩn bị 2 node để làm GluserFS Server
 - Gluser 1 : 192.168.30.135
 - Gluser 2 : 192.168.30.136
 
-## 2.1 . Cài đặt GluserFS Server trên Node1 và Node2
+## 4.3.1 . Cài đặt GluserFS Server trên Node1 và Node2
 
 - Kiểm tra ổ đĩa . Hiện tại đã có `dev/sda` để chứa OS, `dev/sda` để làm brick GluserFS
 ![](https://i.imgur.com/JxNcpBU.png)
@@ -77,7 +77,7 @@ Chuẩn bị 2 node để làm GluserFS Server
 	```
 
 
-## 2.2 . Cấu hình Replication Volume
+## 4.3.2 . Cấu hình Replication Volume
 
 - Cấu hình probe trên node1 : 192.168.30.135
 	```
@@ -131,7 +131,7 @@ Chuẩn bị 2 node để làm GluserFS Server
 ![](https://i.imgur.com/xm1CXKQ.png)
 
 
-## 3. Thêm GluserFS Volume vào Ovirt Domain Storage
+## 4.3.4. Thêm GluserFS Volume vào Ovirt Domain Storage
 
 - Thêm GluseFS tại `Storage -> Domains -> New Domain`
 ![](https://i.imgur.com/zGvJmfW.png)
