@@ -1,6 +1,4 @@
-ovirt
-ovirt
-## 3. Cấu hình Storage trên Ovirt
+## 3. Cấu hình iSCSI trên Ovirt
 ### 3.1 : Khởi tạo đĩa LVM trên Ovirt Host
 
 ![](https://i.imgur.com/XWDDE5Z.png)
