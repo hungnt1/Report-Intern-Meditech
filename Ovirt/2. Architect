@@ -1,0 +1,8 @@
+
+1. Ovirt Opensource - các repo của Ovirt được lưu trữ tại : https://github.com/oVirt
+2. Ovirt sử dụng KVM làm công nghệ ảo hóa trên các Ovirt Host
+3. Ovirt sử dụng Libvirt giao tiếp với KVM thông qua JAVA API
+4. Ovirt sử dụng Cookpit để làm WEB UI cho Ovirt Node
+5.. Mô hình hoạt động của Cocpit
+
+![](https://ovirt.org/images/wiki/Ovirt-1024x698.png?1478101462)
