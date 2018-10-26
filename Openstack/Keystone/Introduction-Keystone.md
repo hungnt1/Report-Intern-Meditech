@@ -5,11 +5,10 @@
   
 - Keystone là OpenStack project cung cấp các dịch vụ Identity, Token, Catalog, Policy cho các project khác trong OpenStack. 
 - Keystone có 2 phiển bản gồm
-```markdown
+
 | V2  | V3  |
 |---|---|
 | sử dụng UUID  |  sử dụng PKI, mỗi mã thông báo đại diện cho một cặp khóa mở và đóng để xác minh chéo và xác thực.  | 
-```
 
 - Hai tính năng chính của Keystone:
 	-   User Management: keystone xác thực tài khoản người dùng và chỉ định xem người dùng có quyền được làm gì.
