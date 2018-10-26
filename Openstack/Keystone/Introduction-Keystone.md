@@ -29,7 +29,7 @@
    -   Phân chia tài nguyên vào các "kho chứa" để sử dụng độc lập với các domain khác
    -   Mỗi domain có thể coi là sự phân chia về mặt logic giữa các tổ chức, doanh nghiệp trên cloud
 
-**1.2.3. Users và User Groups **
+**1.2.3. Users và User Groups**
 
 -   User: người dùng sử dụng nguyên trong project, domain được phân bổ
 -   Group: tập hợp các user , phân bổ tài nguyên
