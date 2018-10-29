@@ -50,7 +50,13 @@ Token bao gồm:
 
 Là danh mục các dịch vụ để người dùng tìm kiếm và truy cập. Catalog chỉ ra các endpoints truy cập dịch vụ, loại dịch vụ mà người dùng truy cập cùng với tên tương ứng, etc. Từ đó người dùng có thể request khởi tạo VM và lưu trữ object.
 
+**2.6. Services**
 
+Là một dịch  khác như Nova, Glance, Swift có cung cấp các endpoint cho phép người dùng truy cập, sử dụng tài nguyên
+
+**2.7. Openstack Client ** 
+
+Là một command-line , bao nhiều nhiều dịch vụ gồm Indentify API, cho phép làm việc với keystone
 
 ![](https://camo.githubusercontent.com/8a5debcf7776f4c94a8c119510ab8f74b325be3c/687474703a2f2f312e62702e626c6f6773706f742e636f6d2f2d424c456c53354c487262492f5646634f774b714e3750492f41414141414141414150772f734f692d686a34474a2d512f73313630302f6b657973746f6e655f6261636b656e64732e706e67)
 
@@ -77,7 +83,7 @@ Nhược điểm:
 -   Hầu hết các doanh nghiệp đều sử dụng LDAP server
 -   Phải ghi nhớ username và password.
 
-## 2.2. LADP
+### 2.2. LADP
 -   Keystone sẽ truy cập tới LDAP như bất kì ứng dụng khác (System Login, Email, Web Application, etc.).
 -   Các cài đặt kết nối sẽ được lưu trong file config của keystone. Các cài đặt này cũng bao gồm tùy chọn cho phép keystone được ghi hoặc chỉ đọc dữ liệu từ LDAP.
 -   Thông thường LDAP chỉ nên cho phép các câu lệnh đọc, ví dụ như tìm kiếm user, group và xác thực.
@@ -90,7 +96,7 @@ Nhược điểm:
 Nhược điểm:
 -   Keystone có thể thấy mật khẩu người dùng, lúc mật khẩu được yêu cầu authentication.
 
-## 2.3. Multiple Backends
+### 2.3. Multiple Backends
 -   Kể từ bản Juno thì Keystone đã hỗ trợ nhiều Identity backends cho V3 Identity API. Nhờ vậy mà mỗi một domain có thể có một identity source (backend) khác nhau.
 -   Domain mặc định thường sử dụng SQL backend bởi nó được dùng để lưu các host service accounts. Service accounts là các tài khoản được dùng bởi các dịch vụ OpenStack khác nhau để tương tác với Keystone.
 -   Việc sử dụng Multiple Backends được lấy cảm hứng trong các môi trường doanh nghiệp, LDAP chỉ được sử dụng để lưu thông tin của các nhân viên bởi LDAP admin có thể không ở cùng một công ty với nhóm triển khai OpenStack. Bên cạnh đó, nhiều LDAP cũng có thể được sử dụng trong trường hợp công ty có nhiều phòng ban.
@@ -103,7 +109,7 @@ Nhược điểm:
 -   Phức tạp trong khâu set up
 -   Xác thực tài khoản người dùng phải trong miền scoped
 
-## 2.4. Identity Providers
+### 2.4. Identity Providers
 -   Kể từ bản Icehouse thì Keystone đã có thể sử dụng các liên kết xác thực thông qua module Apache cho các Identity Providers khác nhau.
 -   Cơ bản thì Keystone sẽ sử dụng một bên thứ 3 để xác thực, nó có thể là những phần mềm sử dụng các backends (LDAP, AD, MongoDB) hoặc mạng xã hội (Google, Facebook, Twitter).
 
