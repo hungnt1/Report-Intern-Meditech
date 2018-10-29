@@ -57,7 +57,12 @@ Trong Openstack hỗ trợ các kiểu cô lập và overplay sau :
 - GRE and VXLAN : là mỗi giao thức đóng gói packet , cho phép tạo ra mạng overlay để tạo kết nối giữa các instance.  Một router ảo để kết nối từ tenant network ra external network.  Một router provider sử dụng để kết nối từ external network vào các instance trong tenant network sử dụng floating IP
 ![](https://docs.openstack.org/mitaka/networking-guide/_images/NetworkTypes.png)
 
+
 ## 2.3 . Một số khái niệm bổ sung 
+
+- **Routed provider networks**
+Routed provider networks cung cấp kết nối ở layer 3 cho các máy ảo. Các network này map với những networks layer 3 đã tồn tại. Cụ thể hơn, các  layer-2 segments của provider network sẽ được gán các router gateway giúp chúng có thể được định tuyến ra bên ngoài chứ thực chất Networking service không cung cấp khả năng định tuyến. Routed provider networks tất nhiên sẽ có hiệu suất thấp hơn so với provider networks.
+
 - **Subnet** : mà một block có thể sử dụng cho host và các địa chỉ liên quan . Subnet được sử dụng để gắn các địa chỉ IP khi một port được khởi tạo
 - **Subnet pool** : 
 	- enduser có thể tạo các subnet và các địa chỉ IP hợp lý trong subnet đó. Tuy nhiên, mạng tenant nên được cấu hình các subnet trước mà tự gắn vào các port
