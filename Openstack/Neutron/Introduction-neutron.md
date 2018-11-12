@@ -174,9 +174,9 @@ Trong Openstack có 3 loại network gồm : provider,  Routed provider networks
 - Nói chung, các thành phần trong Openstack Networking có thể xử lý các hoạt động layer-3 tác động đến hiệu năng và độ tin tưởng, provider network giúp chuyển các hoạt động layer-3 sang hạ tầng mạng vật lý
 
 ## 2.2. Routed Network 
-
 - Routed provider networks cung cấp kết nối ở layer 3 cho các máy ảo. Các network này map với những networks layer 3 đã tồn tại. 
 - Cụ thể hơn , mạng này map tới các các mạng layer 2 đã được chỉ định làm provider network .  Mỗi router có một gateway để làm nhiệm vụ định tuyến . . Routed provider networks tất nhiên sẽ có hiệu suất thấp hơn so với provider networks.
+
 ## 2.3. Self-service network ( tenant )
 
 - Self-service network cho phép các project quản lý các mạng mà không cần quyền admin. Những mạng này hoàn toàn là mạng ảo và yêu cầu một mạng ảo ,sau đó tương tác với provider network và mạng ngoài ( internet ). Self-service thường sử dụng DHCP và meta cho các instance
@@ -194,7 +194,6 @@ Trong Openstack hỗ trợ các kiểu cô lập và overplay sau :
 
 
 ## 2.3 . Một số khái niệm bổ sung 
-
 
 - **Subnet** : mà một block có thể sử dụng cho host và các địa chỉ liên quan . Subnet được sử dụng để gắn các địa chỉ IP khi một port được khởi tạo
 - **Subnet pool** : 
