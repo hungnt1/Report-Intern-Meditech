@@ -50,5 +50,7 @@
 
 # 4. Tham khảo thêm
 [1] : https://github.com/hocchudong/thuctap012017/blob/master/TamNT/Openstack/Cinder/docs/Tong_quan_Cinder.md
+
 [2] : https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/6/html/Component_Overview/section-blockStorage.html
+
 [3] : https://docs.openstack.org/cinder/latest/configuration/block-storage/block-storage-overview.html
