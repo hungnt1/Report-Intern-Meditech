@@ -1,4 +1,5 @@
 
+
 Ghi chép quá trình tìm hiểu OpenStack
 
 - Môi trường : Centos 7.5
@@ -48,7 +49,8 @@ Ghi chép quá trình tìm hiểu OpenStack
 - [Tìm hiểu các Namespace, Agent trong Neutron](https://github.com/nguyenhungsync/Report-Intern-Meditech/blob/master/Openstack/Neutron/4.%20Neutron-Namespace-Agent.md)
 - [Packet Flow sử dụng Linux Bridge](https://github.com/nguyenhungsync/Report-Intern-Meditech/blob/master/Openstack/Neutron/5.%20%20Packet-Walkthrough-Linux-Bridge.md)
 - [Cấu hình Bonding](https://github.com/nguyenhungsync/Report-Intern-Meditech/blob/master/Openstack/Neutron/6.%20Bonding.md)
-
+- [Tìm hiểu VXLAN](https://github.com/nguyenhungsync/Report-Intern-Meditech/blob/master/Openstack/Neutron/7.%20VXLAN.md)
+- [Tìm hiểu OpenvSwitch trong OPS](https://github.com/nguyenhungsync/Report-Intern-Meditech/blob/master/Openstack/Neutron/8.%20OVS.md)
 ### 10. Mở rộng
 
 - [Key Rorate và Decrypt trong Keystone](https://github.com/nguyenhungsync/Report-Intern-Meditech/blob/master/Openstack/Advance/1.%20Key-Rotate-%26-Decrypt.md)
