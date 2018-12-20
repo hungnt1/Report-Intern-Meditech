@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Tung Tang'
+project = 'Tung Tan'
 copyright = '2018, nguyenhungsync'
 author = 'nguyenhungsync'
 
@@ -63,7 +63,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
@@ -101,7 +101,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'TungTangdoc'
+htmlhelp_basename = 'TungTandoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -128,7 +128,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'TungTang.tex', 'Tung Tang Documentation',
+    (master_doc, 'TungTan.tex', 'Tung Tan Documentation',
      'nguyenhungsync', 'manual'),
 ]
 
@@ -138,7 +138,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'tungtang', 'Tung Tang Documentation',
+    (master_doc, 'tungtan', 'Tung Tan Documentation',
      [author], 1)
 ]
 
@@ -149,8 +149,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'TungTang', 'Tung Tang Documentation',
-     author, 'TungTang', 'One line description of project.',
+    (master_doc, 'TungTan', 'Tung Tan Documentation',
+     author, 'TungTan', 'One line description of project.',
      'Miscellaneous'),
 ]
 
