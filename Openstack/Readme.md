@@ -1,5 +1,5 @@
 
-- Đã chuyển về reposhttps://github.com/nguyenhungsync/Openstack_Research
+- Đã chuyển về repository mới :https://github.com/nguyenhungsync/Openstack_Research
 
 Ghi chép quá trình tìm hiểu OpenStack
 
