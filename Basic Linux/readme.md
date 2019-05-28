@@ -4,4 +4,4 @@
 
 Môi trường  : Centos 7.5
 
-Thực Tập Viên : Nguyễn Hùng ( HUNGNT ) 
+Thực Tập Sinh : Nguyễn Hùng ( HUNGNT ) 
